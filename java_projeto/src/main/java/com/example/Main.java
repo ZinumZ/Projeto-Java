@@ -22,7 +22,6 @@ public class Main {
             if (conexao != null) {
                 System.out.println("Conectado com sucesso à instância MySQL!");
             }
-
             //utilizar a instancia do controller para incialização da controladora com a conexão do banco. Exemplo: EstudanteController estudanteController = new EstudanteController(conexao)
 
             conexao.close(); // fecha a conexão com o banco
