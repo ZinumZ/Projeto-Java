@@ -3,15 +3,15 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
+//Fazer import do controller depois
 
 public class Main {
     public static void main(String[] args) {
         System.out.println("Hello world!");
         System.out.println("Hello, Meu projeto JDBC!");
 
-        // organizar seus dados de conexão em strings é uma boa ideia!
 
-        String mySQLURL = "jdbc:mysql://localhost:3306/"; // informar o nome do banco no final da URL é opcional
+        String mySQLURL = "jdbc:mysql://localhost:3306/";
         String usuario = "root";
         String senha = "123456";
 
@@ -23,7 +23,9 @@ public class Main {
                 System.out.println("Conectado com sucesso à instância MySQL!");
             }
 
-            conexao.close(); // fecha a conexão com o banco - sempre fechar após o uso!
+            //utilizar a instancia do controller para incialização da controladora com a conexão do banco. Exemplo: EstudanteController estudanteController = new EstudanteController(conexao)
+
+            conexao.close(); // fecha a conexão com o banco
 
         } catch (SQLException ex) {
 
