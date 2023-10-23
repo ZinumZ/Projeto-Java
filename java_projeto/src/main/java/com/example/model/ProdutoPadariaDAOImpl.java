@@ -67,8 +67,10 @@ public class ProdutoPadariaDAOImpl implements ProdutoPadariaDAO {
         PreparedStatement statementBuscarPorID = this.conexao.prepareStatement(buscarPorID);
         statementBuscarPorID.setString(1, ID);
         ResultSet registros = statementBuscarPorID.executeQuery();
+        
         if (registros.next()) {
-            produto = new ProdutoPadaria(registros.getString("saborProduto"), registros.getString("produtoID"),
+            produto = new ProdutoPadaria(registros.getString("saborProduto"), 
+                    registros.getString("produtoID"),
                     registros.getString("nomeProduto"));
             System.out.println("Produto encontrado com sucesso: " + produto.getNomeProduto());
         } else {
