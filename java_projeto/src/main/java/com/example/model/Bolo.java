@@ -25,15 +25,4 @@ public class Bolo extends ProdutoPadaria {
     }
 
 
-    @Override
-    public double calcularPreco() {
-        double precoPorFatia = 1.50;
-        double precoPorQuilo = 5.00;
-
-        double precoPorFatias = fatias * precoPorFatia;
-        double precoPorPeso = (peso / 1000) * precoPorQuilo;
-
-
-        return precoPorFatias + precoPorPeso;
-    }
 }

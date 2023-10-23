@@ -32,8 +32,5 @@ public class ProdutoPadaria {
         NomeProduto = nomeProduto;
     }
 
-    public double calcularPreco(){
-        return 0.0;
-    }
 
 }
