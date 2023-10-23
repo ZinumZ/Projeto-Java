@@ -1,7 +1,5 @@
 package com.example.model;
-// Esta é a classe que implementa a DAO de ProdutoPadaria para JDBC 
 
-// imports Java
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -9,98 +7,101 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
-public class ProdutoPadariaDAOImpl implements ProdutoPadariaDAO { //O erro vai sumir quando implementar os métodos
+public class ProdutoPadariaDAOImpl implements ProdutoPadariaDAO {
 
-    public Connection conexao;
+    private Connection conexao;
 
     public ProdutoPadariaDAOImpl(Connection conexao) {
-        this.conexao = conexao; // conexão com Banco
-    }
-
-    /* implementação dos métodos da interface EstudanteDAO para JDBC/SQL
-    @Override
-    public void inserir(Estudante estudante) {
-        String inserir = "INSERT INTO estudantes (estudanteNome, estudanteRGA) values (?,?)";
-        try {
-            PreparedStatement statementInserir = this.conexao.prepareStatement(inserir);
-
-            statementInserir.setString(1, estudante.getNome());
-            statementInserir.setString(2, estudante.getRGA());
-            statementInserir.executeUpdate();
-
-            System.out.println(estudante.getNome().toUpperCase()+" registro de estudante inserido com sucesso!");
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        this.conexao = conexao; // conexão com o banco
     }
 
     @Override
-    public void atualizar(Estudante estudante, String nome) {
-        String atualizar = "UPDATE estudantes SET estudanteNome=? WHERE estudanteRGA=?";
-        try {
-            PreparedStatement statementAtualizar = this.conexao.prepareStatement(atualizar);
-            statementAtualizar.setString(1, nome);
-            statementAtualizar.setString(2, estudante.getRGA());
+    public void inserir(ProdutoPadaria produto) {
+    String inserir = "INSERT INTO produtos_padaria (nomeProduto, saborProduto, produtoID) VALUES (?, ?, ?)";
+    try {
+        PreparedStatement statementInserir = this.conexao.prepareStatement(inserir);
+        statementInserir.setString(1, produto.getNomeProduto());
+        statementInserir.setString(2, produto.getSabor());
+        statementInserir.setString(3, produto.getID());
+        statementInserir.executeUpdate();
+        System.out.println("Produto inserido com sucesso: " + produto.getNomeProduto());
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+}
+
+
+    @Override
+    public void atualizar(ProdutoPadaria produto) {
+        String atualizar = "UPDATE produtos_padaria SET nomeProduto=?, saborProduto=? WHERE produtoID=?";
+        try (PreparedStatement statementAtualizar = this.conexao.prepareStatement(atualizar)) {
+            statementAtualizar.setString(1, produto.getNomeProduto());
+            statementAtualizar.setString(2, produto.getSabor());
+            statementAtualizar.setString(3, produto.getID());
             statementAtualizar.executeUpdate();
-            System.out.println("Estudante atualizado com sucesso!");
+            System.out.println("Produto atualizado com sucesso: " + produto.getNomeProduto());
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
     @Override
-    public void excluir(String RGA) {
-        Estudante estudante = this.buscarPorRGA(RGA);
-        if (estudante != null) {
-            System.out.println("Excluindo estudante...");
-            String excluir = "DELETE FROM estudantes WHERE estudanteRGA=" + RGA;
-            try {
-                PreparedStatement statementExcluir = this.conexao.prepareStatement(excluir);
-                statementExcluir.executeUpdate();
-                System.out.println("Estudante excluído com sucesso! " + estudante.getRGA() + ": " + estudante.getNome().toUpperCase());
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
-    @Override
-    public Estudante buscarPorRGA(String RGA) {
-        String buscarPorRGA = "SELECT * FROM estudantes WHERE estudanteRGA=" + RGA;
-        Estudante estudante = null;
+    public void excluir(String ID) {
+        String excluir = "DELETE FROM produtos_padaria WHERE produtoID=?";
         try {
-            Statement statementBuscarPorRGA = this.conexao.createStatement();
-            ResultSet registros = statementBuscarPorRGA.executeQuery(buscarPorRGA);
-            if (registros.next()) {
-                estudante = new Estudante(registros.getString("estudanteNome"), registros.getString("estudanteRGA"));
-                System.out.println("Registro de estudante encontrado com sucesso!");
-            } else {
-                System.out.println("Estudante não encontrado.");
-            }
+            PreparedStatement statementExcluir = this.conexao.prepareStatement(excluir);
+            statementExcluir.setString(1, ID);
+            statementExcluir.executeUpdate();
+            System.out.println("Produto excluído com sucesso: ID " + ID);
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return estudante;
     }
 
+
     @Override
-    public ArrayList<Estudante> buscarTodos() {
-        String buscarTodos = "SELECT * FROM estudantes";
-        ArrayList<Estudante> listaEstudantes = new ArrayList<Estudante>();
+    public ProdutoPadaria buscarPorID(String ID) {
+    String buscarPorID = "SELECT * FROM produtos_padaria WHERE produtoID=?";
+    ProdutoPadaria produto = null;
+    try {
+        PreparedStatement statementBuscarPorID = this.conexao.prepareStatement(buscarPorID);
+        statementBuscarPorID.setString(1, ID);
+        ResultSet registros = statementBuscarPorID.executeQuery();
+        if (registros.next()) {
+            produto = new ProdutoPadaria(registros.getString("saborProduto"), registros.getString("produtoID"),
+                    registros.getString("nomeProduto"));
+            System.out.println("Produto encontrado com sucesso: " + produto.getNomeProduto());
+        } else {
+            System.out.println("Produto não encontrado.");
+        }
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+    return produto;
+}
+
+
+    @Override
+    public ArrayList<ProdutoPadaria> buscarProdutos() {
+        String buscarTodos = "SELECT * FROM produtos_padaria";
+        ArrayList<ProdutoPadaria> listaProdutos = new ArrayList<>();
         try {
             Statement statementBuscarTodos = this.conexao.createStatement();
             ResultSet registros = statementBuscarTodos.executeQuery(buscarTodos);
             while (registros.next()) {
-                Estudante estudante = new Estudante(registros.getString("estudanteNome"),
-                        registros.getString("estudanteRGA"));
-                listaEstudantes.add(estudante);
+                ProdutoPadaria produto = new ProdutoPadaria(
+                        registros.getString("nomeProduto"), // Nome da coluna na tabela: 'nomeProduto'
+                        registros.getString("saborProduto"), // Nome da coluna na tabela: 'saborProduto'
+                        registros.getString("produtoID") // Nome da coluna na tabela: 'produtoID'
+                );
+                listaProdutos.add(produto);
             }
-            System.out.println("Lista de estudantes retornada com sucesso!");
+            System.out.println("Número de produtos encontrados no banco de dados: " + listaProdutos.size());
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return listaEstudantes;
+        return listaProdutos;
     }
-
-*/
+    
+    
 }

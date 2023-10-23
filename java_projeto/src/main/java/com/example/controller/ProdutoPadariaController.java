@@ -1,23 +1,23 @@
 package com.example.controller;
 
-import com.example.model.*; // import do Modelo
-import com.example.view.ProdutoPadariaView; // import da Visão
+import com.example.model.ProdutoPadaria;
+import com.example.model.ProdutoPadariaDAOImpl;
+import com.example.view.ProdutoPadariaView;
 
-//imports Java
 import java.sql.Connection;
 import java.util.ArrayList;
 
 public class ProdutoPadariaController {
-    ProdutoPadariaDAOImpl ProdutoPadariaModel;
-    ProdutoPadariaView ProdutoPadariaView;
+    private ProdutoPadariaDAOImpl ProdutoPadariaModel;
+    private ProdutoPadariaView ProdutoPadariaView;
 
     public ProdutoPadariaController(Connection conexao) {
-        this.ProdutoPadariaView = new ProdutoPadariaView(); // inicia a Visão
-        ProdutoPadaria produto = new ProdutoPadaria(this.ProdutoPadariaView.getNomeProduto(), this.ProdutoPadariaView.getProdutoID(), this.ProdutoPadariaView.getSaborProduto());
+        this.ProdutoPadariaModel = new ProdutoPadariaDAOImpl(conexao); // Inicializa ProdutoPadariaModel com a conexão
+        this.ProdutoPadariaView = new ProdutoPadariaView(); // Inicializa ProdutoPadariaView
         this.iniciarControl();
     }
 
-    public void iniciarControl() { // controle de funcionalidades CRUD 
+    public void iniciarControl() {
         int menu;
         do {
             menu = this.ProdutoPadariaView.mostrarMenu();
@@ -47,44 +47,63 @@ public class ProdutoPadariaController {
         } while (menu != 0);
     }
 
-     // métodos controle do CRUD de ProdutoPadaria
-     public void mostrarProdutos() {
-        ArrayList<ProdutoPadaria> listaProdutos = this.ProdutoPadariaModel.buscarProdutos(); // busca no modelo
-        this.ProdutoPadariaView.mostrarProdutos(listaProdutos); // mostra na visão
+    public void mostrarProdutos() {
+        ArrayList<ProdutoPadaria> listaProdutos = this.ProdutoPadariaModel.buscarProdutos();
+        System.out.println("Número de produtos recebidos do banco de dados: " + listaProdutos.size());
+        this.ProdutoPadariaView.mostrarProdutos(listaProdutos);
     }
 
     public void inserirProduto() {
-        this.ProdutoPadariaView.inserirProduto(); // mostra na visão
-        ProdutoPadaria produto = new ProdutoPadaria(this.ProdutoPadariaView.getNomeProduto(), this.ProdutoPadariaView.getProdutoID(), this.ProdutoPadariaView.getSaborProduto()); // recebe na visão
+        this.ProdutoPadariaView.inserirProduto();
+        ProdutoPadaria produto = new ProdutoPadaria(this.ProdutoPadariaView.getNomeProduto(), this.ProdutoPadariaView.getProdutoID(), this.ProdutoPadariaView.getSaborProduto());
         
-        this.ProdutoPadariaModel.inserir(produto); // grava no modelo
-        this.ProdutoPadariaView.confirmarInsercaoProduto(produto.getID()); // mostra na visão
+        if (this.ProdutoPadariaModel != null) {
+            this.ProdutoPadariaModel.inserir(produto);
+            this.ProdutoPadariaView.confirmarInsercaoProduto(produto.getID());
+        } else {
+            System.out.println("Erro: ProdutoPadariaModel não foi inicializado corretamente.");
+        }
     }
 
     public void excluirProdutoID() {
-        this.ProdutoPadariaView.inserirProduto(); // mostra na visão
+        this.ProdutoPadariaView.excluirProdutoID();
         String ID = this.ProdutoPadariaView.getProdutoID();
         if (this.ProdutoPadariaModel.buscarPorID(ID) != null) {
-            this.ProdutoPadariaModel.excluir(ID); // grava no modelo
-            this.ProdutoPadariaView.confirmarExclusaoProduto(ID); // mostra na visão
+            this.ProdutoPadariaModel.excluir(ID);
+            this.ProdutoPadariaView.confirmarExclusaoProduto(ID);
+        } else {
+            System.out.println("Produto não encontrado com o ID fornecido.");
         }
     }
 
     public void atualizarProduto() {
-        this.ProdutoPadariaView.atualizarProduto(); // mostra na visão
-        String ID = this.ProdutoPadariaView.getProdutoID(); // recebe na visão
-        if (this.ProdutoPadariaModel.buscarPorID(ID) != null) { // verifica no modelo
-            String nomeProduto = this.ProdutoPadariaView.getNomeProduto();
-            this.ProdutoPadariaView.mostrarProduto(this.ProdutoPadariaModel.buscarPorID(ID)); // grava no modelo
-            this.ProdutoPadariaView.confirmarAtualizacaoProduto(ID); // mostra na visão
+        this.ProdutoPadariaView.atualizarProduto();
+        String ID = this.ProdutoPadariaView.getProdutoID();
+        ProdutoPadaria produtoExistente = this.ProdutoPadariaModel.buscarPorID(ID);
+    
+        if (produtoExistente != null) {
+            String novoNome = this.ProdutoPadariaView.getNomeProduto();
+            String novoSabor = this.ProdutoPadariaView.getSaborProduto();
+    
+            produtoExistente.setNomeProduto(novoNome);
+            produtoExistente.setSabor(novoSabor);
+    
+            this.ProdutoPadariaModel.atualizar(produtoExistente);
+            this.ProdutoPadariaView.confirmarAtualizacaoProduto(novoNome, ID);
+        } else {
+            System.out.println("Produto não encontrado com o ID fornecido.");
         }
     }
+    
 
     public void pesquisarProdutoID() {
-        this.ProdutoPadariaView.pesquisarProdutoID(); // mostra na visão
-        String ID = this.ProdutoPadariaView.getProdutoID(); // recebe na visão
-        if (this.ProdutoPadariaModel.buscarPorID(ID) != null) { // verifica no modelo
-            this.ProdutoPadariaView.mostrarProduto(this.ProdutoPadariaModel.buscarPorID(ID));  // busca no modelo e mostra na visão
+        this.ProdutoPadariaView.pesquisarProdutoID();
+        String ID = this.ProdutoPadariaView.getProdutoID();
+        ProdutoPadaria produto = this.ProdutoPadariaModel.buscarPorID(ID);
+        if (produto != null) {
+            this.ProdutoPadariaView.mostrarProduto(produto);
+        } else {
+            System.out.println("Produto não encontrado com o ID fornecido.");
         }
-}
+    }
 }

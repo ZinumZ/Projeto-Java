@@ -35,17 +35,17 @@ public void encerrarView() { // método para encerramento da interface da consol
 
     // funções de impressão de dados no console
     public void mostrarProdutos(ArrayList<ProdutoPadaria> listaProdutos) {
-        System.out.println("PRODUTOS NO CATALOGO:");
-
-        for (int i = 0; i < listaProdutos.size(); i++) {
-            ProdutoPadaria produto = listaProdutos.get(i);
-            this.mostrarProduto(produto);
+        System.out.println("PRODUTOS NO CATÁLOGO:");
+        
+        for (ProdutoPadaria produto : listaProdutos) {
+            System.out.println(produto.getID() + " - " + produto.getNomeProduto() + " (Sabor: " + produto.getSabor() + ")");
         }
     }
+    
 
     public void mostrarProduto(ProdutoPadaria produto) {
         System.out.println(produto.getID() + " = " + produto.getNomeProduto());
-    }
+    }    
 
 
     public String getProdutoID() {
@@ -92,8 +92,8 @@ public void encerrarView() { // método para encerramento da interface da consol
         System.out.println("Produto " + ID + " inserido com sucesso!");
     }
 
-    public void confirmarAtualizacaoProduto(String ID) {
-        System.out.println("Produto " + ID + " atualizado com sucesso!");
+    public void confirmarAtualizacaoProduto(String nomeProduto, String ID) {
+        System.out.println("Produto " + ID + " atualizado com sucesso: " + nomeProduto);
     }
 
     // mensagens de alerta

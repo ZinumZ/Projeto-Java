@@ -3,7 +3,8 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-//Fazer import do controller depois
+import com.example.controller.ProdutoPadariaController;
+
 
 public class Main {
     public static void main(String[] args) {
@@ -11,7 +12,7 @@ public class Main {
         System.out.println("Hello, Meu projeto JDBC!");
 
 
-        String mySQLURL = "jdbc:mysql://localhost:3306/";
+        String mySQLURL = "jdbc:mysql://localhost:3306/BDpadaria";
         String usuario = "root";
         String senha = "123456";
 
@@ -22,7 +23,7 @@ public class Main {
             if (conexao != null) {
                 System.out.println("Conectado com sucesso à instância MySQL!");
             }
-            //utilizar a instancia do controller para incialização da controladora com a conexão do banco. Exemplo: EstudanteController estudanteController = new EstudanteController(conexao)
+            ProdutoPadariaController produtoPadariaController = new ProdutoPadariaController(conexao);
 
             conexao.close(); // fecha a conexão com o banco
 
