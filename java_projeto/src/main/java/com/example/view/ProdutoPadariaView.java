@@ -6,16 +6,16 @@ import java.util.Scanner;
 
 
 public class ProdutoPadariaView {
-    Scanner menu, entrada;
+    Scanner menu, input;
 
     public ProdutoPadariaView(){
         this.menu = new Scanner(System.in); //Menu de opções
-        this.entrada = new Scanner(System.in); //Menu de entradas
+        this.input = new Scanner(System.in); //Menu de entradas
     }
 
 public void encerrarView() { // método para encerramento da interface da console
         System.out.println("Encerrando o programa...");
-        this.entrada.close();
+        this.input.close();
         this.menu.close();
     }
 
@@ -33,18 +33,64 @@ public void encerrarView() { // método para encerramento da interface da consol
         return opcao;
     }
 
-    // métodos de impressão de dados na console
-    public void mostrarEstudantes(ArrayList<ProdutoPadaria> listaEstudantes) {
-        System.out.println("------ESTUDANTES DO SISTEMA:------");
+    // funções de impressão de dados no console
+    public void mostrarProdutos(ArrayList<ProdutoPadaria> listaProdutos) {
+        System.out.println("PRODUTOS NO CATALOGO:");
 
-        for (int i = 0; i < listaEstudantes.size(); i++) {
-            Estudante estudante = listaEstudantes.get(i);
-            this.mostrarEstudante(estudante);
+        for (int i = 0; i < listaProdutos.size(); i++) {
+            ProdutoPadaria produto = listaProdutos.get(i);
+            this.mostrarProduto(produto);
         }
     }
 
-    public void mostrarEstudante(Estudante estudante) {
-        System.out.println(estudante.getRGA() + ": " + estudante.getNome());
+    public void mostrarProduto(ProdutoPadaria produto) {
+        System.out.println(produto.getID() + ": " + produto.getnomeProduto());
     }
 
+    public String getNomeProduto() {
+        System.out.println("Escreva o nome do produto:");
+        String nomeProduto = input.nextLine();
+        return nomeProduto;
+    }
+
+    public String getProdutoID() {
+        System.out.println("Escreva o ID do produto:");
+        String ID = input.nextLine();
+        return ID;
+    }
+
+     // mensagens de títulos CRUD
+     public void inserirProduto() {
+        System.out.println("INSERIR PRODUTO NO CATALOGO:\n");
+    }
+
+    public void pesquisarProdutoID() {
+        System.out.println("PESQUISAR PRODUTO DO CATALOGO:\n");
+    }
+
+    public void excluirProdutoID() {
+        System.out.println("EXCLUIR PRODUTO DO CATALOGO:\n");
+    }
+
+    public void atualizarProduto() {
+        System.out.println("ATUALIZAR PRODUTO DO CATALOGO:\n");
+    }
+
+    // mensagens de confirmação CRUD
+    public void confirmarExclusaoProduto(String ID) {
+        System.out.println("Produto " + ID + " excluído com sucesso!");
+    }
+
+    public void confirmarInsercaoProduto(String ID) {
+        System.out.println("Produto " + ID + " inserido com sucesso!");
+    }
+
+    public void confirmarAtualizacaoProduto(String ID) {
+        System.out.println("Produto " + ID + " atualizado com sucesso!");
+    }
+
+    // mensagens de alerta
+    public void opcaoInvalida() {
+        System.out.println("Opção inválida! Tente novamente.");
+    }
 }
