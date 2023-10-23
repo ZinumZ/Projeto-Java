@@ -22,7 +22,7 @@ public class ProdutoPadariaView {
     public int mostrarMenu() { // método do menu da console
         System.out.println("=====MENU DA PADARIA:=====");
         System.out.println("[1] Mostrar Produtos;");
-        System.out.println("[2] Inserir Produtos;");
+        System.out.println("[2] Inserir Produtos[Bolo, Salgado, Suco, Baguette];");
         System.out.println("[3] Atualizar Produtos;");
         System.out.println("[4] Excluir Produtos;");
         System.out.println("[5] Pesquisar Produtos;");

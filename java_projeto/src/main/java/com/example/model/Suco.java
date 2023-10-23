@@ -31,7 +31,7 @@ public class Suco extends ProdutoPadaria {
         } else if (tamanho == 700) {
             return preco700ML;
         } else {
-                throw new IllegalArgumentException("Tamanho de suco inválido: " + tamanho + " mL"); //testar dps
+                throw new IllegalArgumentException("Tamanho de suco inválido: " + tamanho + " mL");
         }
     }
 }
