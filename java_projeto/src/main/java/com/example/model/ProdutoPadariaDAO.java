@@ -7,9 +7,9 @@ public interface ProdutoPadariaDAO {
 
     void atualizar(ProdutoPadaria ProdutoPadaria, String sabor);
 
-    void excluir(String id);
+    void excluir(String ID);
 
-    ProdutoPadaria buscarPorID(String id); //Falta implementar
+    ProdutoPadaria buscarPorID(String ID); 
 
-    ArrayList<ProdutoPadaria> buscarProdutos(); //Falta implementar
+    ArrayList<ProdutoPadaria> buscarProdutos(); 
 }

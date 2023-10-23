@@ -13,7 +13,7 @@ public class ProdutoPadariaController {
 
     public ProdutoPadariaController(Connection conexao) {
         this.ProdutoPadariaView = new ProdutoPadariaView(); // inicia a Visão
-        this.ProdutoPadariaModel = new ProdutoPadariaModel(conexao); // inicia o Model
+        ProdutoPadaria produto = new ProdutoPadaria(this.ProdutoPadariaView.getNomeProduto(), this.ProdutoPadariaView.getProdutoID(), this.ProdutoPadariaView.getSaborProduto());
         this.iniciarControl();
     }
 
@@ -55,7 +55,8 @@ public class ProdutoPadariaController {
 
     public void inserirProduto() {
         this.ProdutoPadariaView.inserirProduto(); // mostra na visão
-        ProdutoPadaria produto = new ProdutoPadaria(this.ProdutoPadariaView.getnomeProduto(), this.ProdutoPadariaView.getProdutoID()); // recebe na visão
+        ProdutoPadaria produto = new ProdutoPadaria(this.ProdutoPadariaView.getNomeProduto(), this.ProdutoPadariaView.getProdutoID(), this.ProdutoPadariaView.getSaborProduto()); // recebe na visão
+        
         this.ProdutoPadariaModel.inserir(produto); // grava no modelo
         this.ProdutoPadariaView.confirmarInsercaoProduto(produto.getID()); // mostra na visão
     }
@@ -65,7 +66,7 @@ public class ProdutoPadariaController {
         String ID = this.ProdutoPadariaView.getProdutoID();
         if (this.ProdutoPadariaModel.buscarPorID(ID) != null) {
             this.ProdutoPadariaModel.excluir(ID); // grava no modelo
-            this.ProdutoPadariaModel.confirmarExclusaoProduto(ID); // mostra na visão
+            this.ProdutoPadariaView.confirmarExclusaoProduto(ID); // mostra na visão
         }
     }
 
@@ -73,16 +74,17 @@ public class ProdutoPadariaController {
         this.ProdutoPadariaView.atualizarProduto(); // mostra na visão
         String ID = this.ProdutoPadariaView.getProdutoID(); // recebe na visão
         if (this.ProdutoPadariaModel.buscarPorID(ID) != null) { // verifica no modelo
-            String nomeProduto = this.ProdutoPadariaView.getnomeProduto(ID);
-            this.ProdutoPadariaModel.excluir(ID); // grava no modelo
-            this.ProdutoPadariaView.confirmarExclusaoProduto(ID); // mostra na visão
+            String nomeProduto = this.ProdutoPadariaView.getNomeProduto();
+            this.ProdutoPadariaView.mostrarProduto(this.ProdutoPadariaModel.buscarPorID(ID)); // grava no modelo
+            this.ProdutoPadariaView.confirmarAtualizacaoProduto(ID); // mostra na visão
         }
     }
 
     public void pesquisarProdutoID() {
         this.ProdutoPadariaView.pesquisarProdutoID(); // mostra na visão
-        String RGA = this.ProdutoPadariaView.getProdutoID(); // recebe na visão
+        String ID = this.ProdutoPadariaView.getProdutoID(); // recebe na visão
         if (this.ProdutoPadariaModel.buscarPorID(ID) != null) { // verifica no modelo
-            this.ProdutoPadariaView.mostrarProdutos(this.ProdutoPadariaModel.buscarPorID(ID));  // busca no modelo e mostra na visão
+            this.ProdutoPadariaView.mostrarProduto(this.ProdutoPadariaModel.buscarPorID(ID));  // busca no modelo e mostra na visão
         }
+}
 }

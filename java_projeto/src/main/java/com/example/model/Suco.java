@@ -4,8 +4,8 @@ public class Suco extends ProdutoPadaria {
     private float tamanho;
 
 
-    public Suco(String sabor, String id, float tamanho) {
-        super(sabor, id);
+    public Suco(String NomeProduto, String sabor, String id, float tamanho) {
+        super(NomeProduto,sabor, id);
         this.tamanho = tamanho;
     }
 

@@ -44,7 +44,14 @@ public void encerrarView() { // método para encerramento da interface da consol
     }
 
     public void mostrarProduto(ProdutoPadaria produto) {
-        System.out.println(produto.getID() + ": " + produto.getnomeProduto());
+        System.out.println(produto.getID() + " = " + produto.getNomeProduto());
+    }
+
+
+    public String getProdutoID() {
+        System.out.println("Escreva o ID do produto:");
+        String ID = input.nextLine();
+        return ID;
     }
 
     public String getNomeProduto() {
@@ -53,10 +60,10 @@ public void encerrarView() { // método para encerramento da interface da consol
         return nomeProduto;
     }
 
-    public String getProdutoID() {
-        System.out.println("Escreva o ID do produto:");
-        String ID = input.nextLine();
-        return ID;
+    public String getSaborProduto(){
+        System.out.println("Escreva o sabor do produto:");
+        String saborProduto = input.nextLine();
+        return saborProduto;
     }
 
      // mensagens de títulos CRUD

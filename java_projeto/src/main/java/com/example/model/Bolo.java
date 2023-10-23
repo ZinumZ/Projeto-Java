@@ -4,8 +4,8 @@ public class Bolo extends ProdutoPadaria {
     private float peso;
     private int fatias;
 
-    public Bolo(String sabor, String id, float peso, int fatias){
-        super(sabor, id);
+    public Bolo(String NomeProduto, String sabor, String id, float peso, int fatias){
+        super(NomeProduto, sabor, id);
         this.peso = peso;
         this.fatias = fatias;
     }

@@ -1,13 +1,13 @@
 package com.example.model;
 
-public abstract class ProdutoPadaria {
-    private String sabor;
-    private String id;
+public class ProdutoPadaria {
+    private String sabor, ID, NomeProduto;
 
     // Construtor
-    public ProdutoPadaria(String sabor, String id) {
+    public ProdutoPadaria(String sabor, String ID, String NomeProduto) {
         this.sabor = sabor;
-        this.id = id;
+        this.ID = ID;
+        this.NomeProduto = NomeProduto;
     }
 
     public String getSabor() {
@@ -18,12 +18,22 @@ public abstract class ProdutoPadaria {
         this.sabor = sabor;
     }
 
-    public String getId() {
-        return id;
+    public String getID() {
+        return ID;
     }
-    public void setId(String id) {
-        this.id = id;
+    public void setID(String ID) {
+        this.ID = ID;
     }
 
-    public abstract double calcularPreco();
+    public String getNomeProduto() {
+        return NomeProduto;
+    }
+    public void setNomeProduto(String nomeProduto) {
+        NomeProduto = nomeProduto;
+    }
+
+    public double calcularPreco(){
+        return 0.0;
+    }
+
 }
