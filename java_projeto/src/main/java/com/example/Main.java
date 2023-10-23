@@ -8,9 +8,7 @@ import com.example.controller.ProdutoPadariaController;
 
 public class Main {
     public static void main(String[] args) {
-        System.out.println("Hello world!");
-        System.out.println("Hello, Meu projeto JDBC!");
-
+        System.out.println("=====Alunos===== \nAnderson Muniz da Silva\nHelena Ayumi Kobayashi\nRyuna Uemura Cortez\n\n");
 
         String mySQLURL = "jdbc:mysql://localhost:3306/BDpadaria";
         String usuario = "root";
