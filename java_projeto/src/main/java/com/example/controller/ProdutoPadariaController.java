@@ -49,7 +49,15 @@ public class ProdutoPadariaController {
 
     public void mostrarProdutos() {
         ArrayList<ProdutoPadaria> listaProdutos = this.ProdutoPadariaModel.buscarProdutos();
-        System.out.println("Número de produtos recebidos do banco de dados: " + listaProdutos.size());
+        System.out.println("PRODUTOS NO CATÁLOGO:");
+        for (ProdutoPadaria produto : listaProdutos) {
+            double preco = produto.calcularPreco();
+            System.out.println(produto.getNomeProduto() + " - " + produto.getID() + " (Sabor: " + produto.getSabor() + ")");
+            System.out.println("Preço: R$" + preco);
+            System.out.println("=========================");
+        }
+        // Restante do código...
+    
         this.ProdutoPadariaView.mostrarProdutos(listaProdutos);
     }
 
