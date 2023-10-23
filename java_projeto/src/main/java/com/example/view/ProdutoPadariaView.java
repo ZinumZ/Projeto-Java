@@ -13,7 +13,7 @@ public class ProdutoPadariaView {
         this.input = new Scanner(System.in); //Menu de entradas
     }
 
-public void encerrarView() { // método para encerramento da interface da console
+    public void encerrarView() { // método para encerramento da interface da console
         System.out.println("Encerrando o programa...");
         this.input.close();
         this.menu.close();
