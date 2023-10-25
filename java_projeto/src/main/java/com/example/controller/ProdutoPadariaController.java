@@ -54,7 +54,6 @@ public class ProdutoPadariaController {
             System.out.println(produto.getNomeProduto() + " - " + produto.getID() + " (Sabor: " + produto.getSabor() + ")");
             System.out.println("=========================");
         }
-        // Restante do código...
     
         this.ProdutoPadariaView.mostrarProdutos(listaProdutos);
     }
